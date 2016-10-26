@@ -6,7 +6,7 @@
 /*   By: jabadie <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/07/28 21:29:25 by jabadie           #+#    #+#             */
-/*   Updated: 2015/07/28 21:35:04 by jabadie          ###   ########.fr       */
+/*   Updated: 2016/10/26 15:45:00 by jabadie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@ t_map	*parser(void)
 	int		ret;
 	char	buf[BUFF_SZ + 1];
 
-	while ((ret = read(9, buf, BUFF_SZ)) > 0)
+	
+	while ((ret = read(0, buf, BUFF_SZ)) > 0)
 	{
-
+		
 	}
 	return ();
 }

@@ -6,7 +6,7 @@
 /*   By: jabadie <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/07/28 21:10:59 by jabadie           #+#    #+#             */
-/*   Updated: 2015/07/28 21:35:05 by jabadie          ###   ########.fr       */
+/*   Updated: 2016/10/26 15:44:59 by jabadie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ typedef struct	s_node
 	int 			index;
 	int				x;
 	int				y;
-	struct s_node	*link;
+	struct s_node	**link;
+	int				link_sz;
 }				t_node;
 
 typedef struct s_map
@@ -34,5 +35,7 @@ typedef struct s_map
 	t_node	*all_node;
 	int		nb_node;
 }				t_map;
+
+t_map	*parser(void);
 
 #endif

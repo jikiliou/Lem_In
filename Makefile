@@ -3,57 +3,57 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: avallete <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: jabadie <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2015/02/18 13:18:20 by avallete          #+#    #+#              #
-#    Updated: 2015/07/28 21:22:35 by jabadie          ###   ########.fr        #
+#    Created: 2015/04/21 03:34:53 by jabadie           #+#    #+#              #
+#    Updated: 2016/10/26 15:01:51 by jabadie          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = lem_in
 
-SRC_PATH = ./src/
-OBJ_PATH = ./obj/
-INC_PATH = -I ./includes/
+OBJ_PATH = ./objs/
+SRC_PATH = ./srcs/
 
-SRC_NAME = 
+INCLUDE = -I ./includes
+LIBFT = -L ./libft -lft -L ./minilibx_macos/ -framework OPENGL -framework AppKit -lmlx
 
-OBJ_NAME = $(SRC_NAME:.c=.o)
+CFLAGS = -Wall -Werror -Wextra  -g
 
-LIBFT = -L libft
+SRC_NAME = main.c \
+		   parser.c \
+		   resolver.c
 
+OBJ = $(addprefix $(OBJ_PATH), $(SRC_NAME:.c=.o))
 SRC = $(addprefix $(SRC_PATH), $(SRC_NAME))
-OBJ = $(addprefix $(OBJ_PATH), $(OBJ_NAME))
 
-CFLAGS = -Wall -Wextra -Werror
-CC = gcc
+RED=\033[0;31m
+LBLUE=\033[1;34m
+CYAN=\033[0;36m
+ORANGE=\033[0;33m
+NC=\033[0m
 
-RED = \033[30;41m
-GREEN = \033[32m
-CYAN = \033[36m
-ORANGE = \033[33m
-NC = \033[0m
+all: $(NAME)
 
-all : $(NAME)
+$(NAME): $(OBJ)
+	@make -C libft
+	@gcc $(CFLAGS) $(INCLUDE) $(LIBFT) -o $(NAME) $(OBJ)
+	@echo "${ORANGE}Created successfully: $(NAME)${NC}";
 
-$(NAME) : $(OBJ)
-	@make -s -C libft
-	@echo "${GREEN}Compile $(NAME) with $(CFLAGS)${NC}";
-	@gcc $(CLFAGS) $(OBJ) $(INC_PATH) $(LIBFT) -o $(NAME)
-
-$(OBJ_PATH)%.o : $(SRC_PATH)%.c
+$(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@mkdir -p $(OBJ_PATH)
-	@echo "${ORANGE}Create bynary $(NAME) : $@ with $<${NC}";
-	@$(CC) $(CFLAGS) $(INC_PATH) -o $@ -c $<
-
-clean:
-	@echo "${RED} Delete OBJ files ${NC}"
-	@rm -rf $(OBJ_PATH)
+	@gcc $(CFLAGS) $(INCLUDE) -o $@ -c $^
+	@echo "${LBLUE}Created $@ ${NC}";
 
 fclean: clean
-	@echo "${RED} Delete $(NAME) file ${NC}"
-	@rm -rf $(NAME)
+	@rm -f $(NAME)
+	@echo "$(RED)Deleting: $(NAME)${NC}"
 
-re: fclean all clean
+clean:
+	@rm -rf $(OBJ_PATH)
+	@echo "$(RED)Deleting: $(OBJ_PATH)${NC}"
+
+re : fclean all
 
 .PHONY: all clean fclean re
+
